@@ -1,15 +1,143 @@
 <template>
-	<div>
-		
+	<div class="wrapper" v-if="isShow">
+		<!-- 蒙版 -->
+		<view v-if="mask" class="mask" :style="maskStyle" @click="clickMask"></view>
+		<view class="content" :style="contentStyle">
+			<slot></slot>
+			<list-wra v-if="Array.isArray(list) && list.length > 0">
+				<list-item v-for="item in list" :key="item.id"></list-item>
+			</list-wra>
+		</view>
 	</div>
 </template>
 
 <script>
+	import listWrp from './list_wrapper.nvue'
+	import listItem from './list_item.nvue'
 	export default {
-		
+		components: {
+			listWrp,
+			listItem
+		},
+		props: {
+			mask: {
+				type: Boolean,
+				default: true
+			},
+			maskColor: {
+				type: String,
+				default: 'rgba(1, 1, 1, .5)'
+			},
+			type: {
+				type: String,
+				default: 'default'
+			},
+			contentSize: { // 弹窗尺寸 如果 type不是default 不要传入此参数
+				type: String
+			},
+			contentPosition: { // 弹窗定位 如果 type不是default 不要传入此参数
+				type: String
+			},
+			list: {
+				type: Array
+			},
+			maskHide: {
+				type: Boolean,
+				default: true
+			}
+		},
+		data() {
+			return {
+				isShow: false,
+				x: 0,
+				y: 0
+			}
+		},
+		computed: {
+			maskStyle() {
+				return `background-color: ${this.maskColor};`
+			},
+			contentStyle() {
+				let width, height, x, y
+				switch (this.type) {
+					case 'default':
+						const size = this.contentSize
+						const position = this.contentPosition
+						
+						if (size) {
+							const sizeArr = size.split(',')
+							const positionArr = position.split(',')
+							width = sizeArr[0]
+							height = sizeArr[1]
+							x = positionArr[0]
+							y = positionArr[1]
+						}
+						return `left: ${x}px; top: ${y}px; width: ${width}upx; height: ${height}upx;`
+					case 'left':
+						width = '280upx'
+						return
+					case 'right':
+						width = '280upx'
+						return
+					case 'bottom':
+						width = '750upx'
+						return
+					default:
+						return
+				}
+			}
+		},
+		methods: {
+			show(e) {
+				if (this.type == '' || this.type == 'default') {
+					if (!e) {
+						 throw new Error("请传入e");
+					}
+				}
+				// #ifdef APP-NVUE
+					let {} = e
+				// #endif
+				// #ifndef APP-NVUE
+					let {detail} = e
+					let {x, y} = detail
+					this.x = x
+					this.y = y
+				// #endif
+				this.isShow = true
+				
+			},
+			hide() {
+				this.isShow = false
+			},
+			clickMask() {
+				if (this.maskHide) {
+					this.hide()
+				}
+			}
+		}
 	}
 </script>
 
-<style>
+<style scoped>
+	.wrapper {
+		/* position: fixed; */
+		position: fixed;
+	}
 
+	.mask {
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+	}
+
+	.content {
+		width: 200upx;
+		height: 600upx;
+		position: fixed;
+		top: 200upx;
+		left: 100upx;
+		background-color: #4CD964;
+	}
 </style>

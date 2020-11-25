@@ -1,28 +1,51 @@
 <template>
 	<div class="page" :style="pageStyle">
 		<div class="item">
-			<!-- <text class="iconfont" style="font-size: 66rpx;">&#xe654;</text> -->
 			<view class="btn_box">
-				<icon-btn></icon-btn>
+				<icon-btn @handleLong="longTap" @handleTap="handleTap"  style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
+			<view class="btn_box"> 
+				<icon-btn @handleTap="handleTap" style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
+			<view class="btn_box">
+				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 		</div>
-		<div>
-			
+		<div class="item">
+			<view class="btn_box">
+				<icon-btn @handleTap="handleTap" style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
+			<view class="btn_box">
+				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
+			<view class="btn_box">
+				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
 		</div>
-		<div>
-
+		<div class="item">
+			<view class="btn_box">
+				<icon-btn @handleTap="handleTap" style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
+			<view class="btn_box">
+				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
+			<view class="btn_box">
+				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
 		</div>
-		<div>
-
-		</div>
+		<view style="position: fixed;">
+			<popup  ref="popup"></popup>
+		</view>
 	</div>
 </template>
 
 <script>
 	import iconBtn from '@/components/icon_btn.nvue'
+	import popup from '@/components/popup.nvue'
 	export default {
 		components: {
-			iconBtn
+			iconBtn,
+			popup
 		},
 		data() {
 			return {
@@ -37,20 +60,19 @@
 				} = res
 				this.windowHeight = windowHeight
 			})
-			// #ifdef APP-PLUS-NVUE
-			// nvue加载图标库 
-			const domModule = weex.requireModule('dom')
-			domModule.addRule('fontFace', {
-				'fontFamily': "iconfont",
-				'src': "url('https://at.alicdn.com/t/font_1643689_l6bv9j8ytq.ttf')"
-			})
-			// #endif
-
 		},
 		created() {
 
 		},
 		methods: {
+			handleTap(e) {
+				console.log('tap', e)
+				
+				this.$refs.popup.show(e)
+			},
+			longTap(e) {
+				console.log('long', e)
+			},
 			getWindowSize() {
 				return new Promise((res, rej) => {
 					uni.getSystemInfo({
@@ -76,6 +98,9 @@
 <style scoped>
 	/* 页面样式 */
 	.page {
+		/* #ifndef APP-PLUS */
+		display: flex;
+		/* #endif */
 		background-color: #F8F8F8;
 		justify-content: space-between;
 		flex-direction: column;
@@ -85,11 +110,18 @@
 
 	/* 公共样式 */
 	.item {
+		/* #ifndef APP-PLUS */
+		display: flex;
+		/* #endif */
 		justify-content: space-between;
+		flex-direction: row;
 		padding-left: 30upx;
 		padding-right: 30upx;
 	}
+
 	.btn_box {
 		width: 200upx;
+		justify-content: center;
+		align-items: center;
 	}
 </style>

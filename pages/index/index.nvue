@@ -1,0 +1,95 @@
+<template>
+	<div class="page" :style="pageStyle">
+		<div class="item">
+			<!-- <text class="iconfont" style="font-size: 66rpx;">&#xe654;</text> -->
+			<view class="btn_box">
+				<icon-btn></icon-btn>
+			</view>
+		</div>
+		<div>
+			
+		</div>
+		<div>
+
+		</div>
+		<div>
+
+		</div>
+	</div>
+</template>
+
+<script>
+	import iconBtn from '@/components/icon_btn.nvue'
+	export default {
+		components: {
+			iconBtn
+		},
+		data() {
+			return {
+				windowHeight: 0
+			}
+		},
+		onLoad() {
+			this.$nextTick(async () => {
+				let res = await this.getWindowSize()
+				let {
+					windowHeight
+				} = res
+				this.windowHeight = windowHeight
+			})
+			// #ifdef APP-PLUS-NVUE
+			// nvue加载图标库 
+			const domModule = weex.requireModule('dom')
+			domModule.addRule('fontFace', {
+				'fontFamily': "iconfont",
+				'src': "url('https://at.alicdn.com/t/font_1643689_l6bv9j8ytq.ttf')"
+			})
+			// #endif
+
+		},
+		created() {
+
+		},
+		methods: {
+			getWindowSize() {
+				return new Promise((res, rej) => {
+					uni.getSystemInfo({
+						success: data => {
+							res(data)
+						},
+						fail: err => {
+							rej(err)
+						}
+					})
+				})
+			}
+		},
+		computed: {
+			pageStyle() {
+				let height = this.windowHeight
+				return `height: ${height}px`
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	/* 页面样式 */
+	.page {
+		background-color: #F8F8F8;
+		justify-content: space-between;
+		flex-direction: column;
+		padding-top: 40upx;
+		padding-bottom: 40upx;
+	}
+
+	/* 公共样式 */
+	.item {
+		justify-content: space-between;
+		padding-left: 30upx;
+		padding-right: 30upx;
+	}
+	.btn_box {
+		width: 200upx;
+	}
+</style>

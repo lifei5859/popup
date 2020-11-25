@@ -1,0 +1,70 @@
+<template>
+	<view class="wrapper" :style="style"  hover-class="active">
+		<text class="iconfont icon">{{icon}}</text>
+		<text class="title">{{title}}</text>
+	</view>
+</template>
+
+<script>
+	export default {
+		props: {
+			icon: {
+				type: String,
+				default: '\ue654'
+			},
+			style: {
+				type: String,
+				default: ''
+			},
+			title: {
+				type: String,
+				default: '图标按钮'
+			},
+			bgColor: {
+				type: String,
+				default: '#fff'
+			},
+			iconStyle: {
+				type: String,
+				default: ''
+			},
+			titleStyle: {
+				type: String,
+				default: ''
+			}
+		},
+		onLoad() {
+			// #ifdef APP-PLUS-NVUE
+			// nvue加载图标库 
+			const domModule = weex.requireModule('dom')
+			domModule.addRule('fontFace', {
+				'fontFamily': "iconfont",
+				'src': "url('https://at.alicdn.com/t/font_1643689_l6bv9j8ytq.ttf')"
+			})
+			// #endif
+		}
+	}
+</script>
+
+<style scoped>
+	.wrapper {
+		padding-left: 16upx;
+		padding-top: 16upx;
+		padding-bottom: 16upx;
+		padding-right: 16upx;
+		justify-content: center;
+	}
+	.active {
+		background-color: rgba(222, 222, 222, .8);
+	}
+	.icon {
+		color: #333333;
+		text-align: center;
+		margin-bottom: 10upx;
+	}
+	.title {
+		color: #333333;
+		font-size: 24upx;
+		text-align: center;
+	}
+</style>

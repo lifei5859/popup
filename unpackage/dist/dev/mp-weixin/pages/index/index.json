@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "uni-app",
+  "usingComponents": {
+    "icon-btn": "/components/qdxns_icon/icon_btn",
+    "popup": "/components/qdxns_popup/popup"
+  }
+}

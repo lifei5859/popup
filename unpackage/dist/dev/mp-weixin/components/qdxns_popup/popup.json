@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "list-wra": "/components/qdxns_list/list_wrapper",
+    "list-item": "/components/qdxns_list/list_item"
+  }
+}

@@ -2,46 +2,77 @@
 	<div class="page" :style="pageStyle">
 		<div class="item">
 			<view class="btn_box">
-				<icon-btn @handleLong="longTap" @handleTap="handleTap"  style="height: 150rpx; width: 150rpx;"></icon-btn>
-			</view>
-			<view class="btn_box"> 
-				<icon-btn @handleTap="handleTap" style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleLong="longTap" title="长按列表" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 			<view class="btn_box">
-				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleLong="tapToCustom" title="长按插槽" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
+			</view>
+			<view class="btn_box">
+				<icon-btn @handleLong="iconLongTap" title="长按带图标列表" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 		</div>
 		<div class="item">
 			<view class="btn_box">
-				<icon-btn @handleTap="handleTap" style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleTap="tapLeftCustom" title="左侧自定义" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 			<view class="btn_box">
-				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleTap="tapBottomCustom" styleText="height: 150rpx; width: 150rpx;" title="底部自定义"></icon-btn>
 			</view>
 			<view class="btn_box">
-				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleTap="handleTap('right')" title="点击右侧" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 		</div>
 		<div class="item">
 			<view class="btn_box">
-				<icon-btn @handleTap="handleTap" style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleLong="longTap" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 			<view class="btn_box">
-				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleTap="handleTap('bottom')" title="点击底部" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 			<view class="btn_box">
-				<icon-btn style="height: 150rpx; width: 150rpx;"></icon-btn>
+				<icon-btn @handleLong="longTap" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
 			</view>
 		</div>
+		<!-- 列表弹层 -->
 		<view style="position: fixed;">
-			<popup  ref="popup"></popup>
+			<popup :type="popType" @tapListItem="tapListItem" contentSize="260,320" :list="list" itemBorder ref="popup"></popup>
+		</view>
+		<!-- 自定义谈层 -->
+		<view style="position: fixed;">
+			<popup :type="popType" @tapListItem="tapListItem" contentSize="300,300" itemBorder ref="popupCustom">
+				<view class="custom_list">
+					<view v-for="item in list2" :key="item.id" class="custom_list_item">
+						<icon-btn @handleTap="tapCustom(item)" :iconStyle="item.style" :showText="false" :icon="item.icon" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
+					</view>
+				</view>
+			</popup>
+		</view>
+		<!-- 底部自定义弹层 -->
+		<view style="position: fixed;">
+			<popup :type="popType" @tapListItem="tapListItem" contentSize="300,300" itemBorder ref="popupBotCus">
+				<view class="custom_list_bottom">
+					<view v-for="item in bottomList" :key="item.id" class="custom_list_bottom_item">
+						<icon-btn @handleTap="tapCustom(item)" :iconStyle="item.style" :showText="false" :icon="item.icon" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
+					</view>
+				</view>
+			</popup>
+		</view>
+		<!-- 左侧自定义弹层 -->
+		<view style="position: fixed;">
+			<popup :type="popType" @tapListItem="tapListItem" contentSize="300,300" itemBorder ref="popupLeftCus">
+				<view class="custom_list_left">
+					<view v-for="item in bottomList" :key="item.id" class="custom_list_left_item">
+						<icon-btn @handleTap="tapCustom(item)" :iconStyle="item.style" :showText="false" :icon="item.icon" styleText="height: 150rpx; width: 150rpx;"></icon-btn>
+					</view>
+				</view>
+			</popup>
 		</view>
 	</div>
 </template>
 
 <script>
-	import iconBtn from '@/components/icon_btn.nvue'
-	import popup from '@/components/popup.nvue'
+	import iconBtn from '@/components/qdxns_icon/icon_btn.nvue'
+	import popup from '@/components/qdxns_popup/popup.nvue'
 	export default {
 		components: {
 			iconBtn,
@@ -49,7 +80,89 @@
 		},
 		data() {
 			return {
-				windowHeight: 0
+				windowHeight: 0,
+				list1: [{
+						id: 0,
+						text: '选项一哎呦不',
+						event: 'ev1'
+					},
+					{
+						id: 1,
+						text: '选项二哎呦',
+						event: 'ev2'
+					},
+					{
+						id: 2,
+						text: '选项三当时发',
+						event: 'ev3'
+					},
+					{
+						id: 3,
+						text: '选项四撒打算',
+						event: 'ev4'
+					}
+				],
+				list2: [{
+						id: 0,
+						text: '图标选项1',
+						icon: '\ue60e',
+						event: 'ev1',
+						style: 'color: rgb(50, 50, 50); font-size: 60rpx;'
+					},
+					{
+						id: 1,
+						text: '图标选项2',
+						icon: '\uedbc',
+						event: 'ev2',
+						style: 'color: rgb(100, 100, 100); font-size: 60rpx;'
+					},
+					{
+						id: 2,
+						text: '图标选项3',
+						icon: '\ue6ea',
+						event: 'ev3',
+						style: 'color: rgb(200, 100, 150); font-size: 60rpx;'
+					},
+					{
+						id: 3,
+						text: '图标选项4',
+						icon: '\ue670',
+						event: 'ev4',
+						style: 'color: rgb(100, 100, 150); font-size: 60rpx;'
+					}
+				],
+				bottomList: [
+					{
+							id: 0,
+							text: '底部图标1',
+							icon: '\uee8e',
+							event: 'ev1',
+							style: 'color: rgb(50, 50, 50); font-size: 60rpx;'
+						},
+						{
+							id: 1,
+							text: '底部图标2',
+							icon: '\uedcc',
+							event: 'ev2',
+							style: 'color: rgb(100, 100, 100); font-size: 60rpx;'
+						},
+						{
+							id: 2,
+							text: '底部图标3',
+							icon: '\ueea1',
+							event: 'ev3',
+							style: 'color: rgb(200, 100, 150); font-size: 60rpx;'
+						},
+						{
+							id: 3,
+							text: '底部图标4',
+							icon: '\ueeaa',
+							event: 'ev4',
+							style: 'color: rgb(100, 100, 150); font-size: 60rpx;'
+						}
+				],
+				listIndex: 1,
+				popType: 'default'
 			}
 		},
 		onLoad() {
@@ -60,18 +173,86 @@
 				} = res
 				this.windowHeight = windowHeight
 			})
-		},
+		}, 
 		created() {
 
 		},
 		methods: {
+			tapCustom(e) {
+				uni.showToast({
+					icon: 'none',
+					title: '点击了' + e.text
+				}) 
+			},
 			handleTap(e) {
-				console.log('tap', e)
-				
-				this.$refs.popup.show(e)
+				this.popType = e
+				this.$nextTick(() => {
+					this.$refs.popup.show(e)
+				})
+			},
+			tapBottomCustom() {
+				this.popType = 'bottom'
+				this.$nextTick(() => {
+					this.$refs.popupBotCus.show()
+				})
+			},
+			tapLeftCustom() {
+				this.popType = 'left'
+				this.$nextTick(() => {
+					this.$refs.popupLeftCus.show()
+				})
+			},
+			tapListItem({
+				text,
+				event
+			}) {
+				this.$refs.popup.hide()
+				switch (event) {
+					case 'ev1':
+						uni.showToast({
+							title: text
+						})
+						break
+					case 'ev2':
+						uni.showToast({
+							icon: 'none',
+							title: text
+						})
+						break
+					case 'ev3':
+						uni.showModal({
+							title: '提示',
+							content: text,
+							showCancel: false
+						})
+						break
+					case 'ev4':
+						uni.showModal({
+							title: '提示',
+							content: text
+						})
+						break
+				}
+			},
+			tapToCustom(e) {
+				this.popType = 'default'
+				this.$nextTick(() => {
+					this.$refs.popupCustom.show(e)
+				})
+			},
+			iconLongTap(e) {
+				this.listIndex = 2
+				this.popType = 'default'
+				this.$nextTick(() => {
+					this.$refs.popup.show(e)
+				})
 			},
 			longTap(e) {
-				console.log('long', e)
+				this.listIndex = 1
+				this.popType = 'default'
+				this.$nextTick(() => {
+					this.$refs.popup.show(e)
+				})
 			},
 			getWindowSize() {
 				return new Promise((res, rej) => {
@@ -90,6 +271,9 @@
 			pageStyle() {
 				let height = this.windowHeight
 				return `height: ${height}px`
+			},
+			list() {
+				return this['list' + this.listIndex]
 			}
 		}
 	}
@@ -121,6 +305,71 @@
 
 	.btn_box {
 		width: 200upx;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	/* 自定义内容列表 */
+	.custom_list {
+		width: 300rpx;
+		height: 300rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-wrap: wrap;
+	}
+	.custom_list_item {
+		width: 150rpx;
+		height: 150rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		box-sizing: border-box;
+		/* #endif */
+		justify-content: center;
+		align-items: center;
+	}
+	/* 底部自定义列表 */
+	.custom_list_bottom {
+		width: 750rpx;
+		height: 300rpx;
+		/* #ifndef APP-NVUE */
+		box-sizing: border-box;
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 30rpx;
+	}
+	.custom_list_bottom_item {
+		width: 150rpx;
+		height: 150rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		box-sizing: border-box;
+		/* #endif */
+		justify-content: center;
+		align-items: center;
+	}
+	
+	/* 左侧自定义 */
+	.custom_list_left {
+		width: 300rpx;
+		/* #ifndef APP-NVUE */
+		box-sizing: border-box;
+		display: flex;
+		/* #endif */
+		justify-content: space-between;
+		align-items: center;
+		padding: 30rpx;
+	}
+	.custom_list_left_item {
+		width: 150rpx;
+		height: 150rpx;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		box-sizing: border-box;
+		/* #endif */
 		justify-content: center;
 		align-items: center;
 	}

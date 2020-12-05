@@ -1,0 +1,111 @@
+
+.p_wrapper.data-v-710727d5 {
+	/* position: fixed; */
+	position: fixed;
+}
+.mask.data-v-710727d5 {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+.content.data-v-710727d5 {
+	position: fixed;
+	background-color: #fff;
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
+	overflow: hidden;
+}
+.not_def_show.data-v-710727d5 {
+	-webkit-transform: scale(0, 0);
+	        transform: scale(0, 0);
+	opacity: 0;
+}
+.not_left_show.data-v-710727d5 {
+	-webkit-transform: scale(0, 1);
+	        transform: scale(0, 1);
+	opacity: 0;
+}
+.not_right_show.data-v-710727d5 {
+	-webkit-transform: scale(0, 1);
+	        transform: scale(0, 1);
+	opacity: 0;
+}
+.not_bottom_show.data-v-710727d5 {
+	-webkit-transform: scale(1, 0);
+	        transform: scale(1, 0);
+	opacity: 0;
+}
+.shadow.data-v-710727d5 {
+	-webkit-box-shadow: 2px 2px 2px rgba(50, 50, 50, .4);
+	        box-shadow: 2px 2px 2px rgba(50, 50, 50, .4);
+}
+.not_nvue_animation_show.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(1, 1);
+	        transform: scale(1, 1);
+	opacity: 1;
+}
+.not_nvue_animation_hide.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(0, 0);
+	        transform: scale(0, 0);
+	opacity: 0;
+}
+.not_nvue_animation_show_left.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(1, 1);
+	        transform: scale(1, 1);
+	opacity: 1;
+}
+.not_nvue_animation_hide_left.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(0, 1);
+	        transform: scale(0, 1);
+	opacity: 0;
+}
+.not_nvue_animation_hide_right.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(0, 1);
+	        transform: scale(0, 1);
+	opacity: 0;
+}
+.not_nvue_animation_show_right.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(1, 1);
+	        transform: scale(1, 1);
+	opacity: 1
+}
+.not_nvue_animation_show_bottom.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(1, 1);
+	        transform: scale(1, 1);
+	opacity: 1;
+}
+.not_nvue_animation_hide_bottom.data-v-710727d5 {
+	-webkit-transition: all 300ms;
+	transition: all 300ms;
+	-webkit-transform: scale(1, 0);
+	        transform: scale(1, 0);
+	opacity: 0;
+}
+
+/* 	@keyframes name{
+	from{
+		
+	}
+	to{
+		
+	}
+} */
+
+
+
